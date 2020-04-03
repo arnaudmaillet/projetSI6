@@ -4,7 +4,7 @@
     <title>Formulaire de connexion</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="icon" type="image/png" href="img/gsb_logo.png">
+    <link rel="icon" type="image/png" href="img/logo.png">
 
     <link rel="stylesheet" href="css/webfonts/all.min.css">
     <link rel="stylesheet" href="composant/bootstrap/bootstrap.min.css">
@@ -30,21 +30,30 @@
                     <form id="login-form" class="form" action="" method="post">
                         <h3 class="text-center">Connexion</h3>
                         <div class="form-group">
-                            <label for="username" class="">Nom d'utilisateur:</label><br>
-                            <input type="text" name="username" id="username" class="form-control">
+                            <label for="email" class="">Login (email de l'utilisateur)</label><br>
+
+                            <!-- Label Password -->
+                            <input type="text" id="email" class="form-control">
+
                         </div>
                         <div class="form-group">
                             <label for="password" class="">Mot de passe:</label><br>
-                            <input type="text" name="password" id="password" class="form-control">
+
+                            <!-- Label Password -->
+                            <input type="password" id="password" class="form-control">
+                            <span id='messagePassword' class='text-danger'></span>
+
                         </div>
                         <div class="form-group">
                             <label for="remember-me" class=""><span>Se souvenir de moi</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                            <button type="button" class="btn btn-success" style="margin-top: 25px">
-                                <a href="pageCompte/compteUtilisateur.html" class="text-white" style="text-decoration: none">Connexion</a>
+
+                            <!-- Btn Connexion -->
+                            <button id="btnValider" type="button" class="btn btn-success" style="margin-top: 25px">
+                                <!--<a href="pageSession/session.html"> --> Connexion <!--</a> -->
                             </button>
                         </div>
                         <div id="register-link" class="text-right">
-                            <a href="pageCreation/creationCompte.html" class="text-dark" style="text-decoration: none">Créer son compte ici</a>
+                            <a href="pageCreation/creationSession.html" class="text-dark" style="text-decoration: none">Créer son compte ici</a>
                         </div>
                     </form>
                 </div>

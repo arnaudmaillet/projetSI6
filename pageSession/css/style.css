@@ -26,8 +26,12 @@ p {
     font-size: 1.2rem;
 }
 
-.modal{
+.modal1{
     padding: 200px;
+}
+
+.modal2{
+    padding: 300px;
 }
 
 

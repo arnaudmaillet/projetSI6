@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Formulaire de création de compte</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" type="image/png" href="../img/logo.png">
+
+    <link rel="stylesheet" href="css/webfonts/all.min.css">
+    <link rel="stylesheet" href="../composant/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../composant/confirm/jquery-confirm.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../composant/noty/animate.css">
+    <link rel="stylesheet" href="../composant/noty/noty.css">
+    <link rel="stylesheet" href="../composant/noty/sunset.css">
+
+    <script src="../composant/jquery.js"></script>
+    <script src="../composant/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../composant/confirm/jquery-confirm.min.js"></script>
+    <script src="../composant/personnel/class.std.js"></script>
+    <script src="../composant/noty/noty.min.js"></script>
+    <script src="js/index.js"></script>
+</head>
+
+<body>
+<div id="menu"></div>
+
+<div id="creation">
+    <h3 class="text-center text-white pt-5">Creation de compte</h3>
+    <div class="container">
+        <div id="creation-row" class="row justify-content-center align-items-center">
+            <div id="creation-column" class="col-md-6">
+                <div id="creation-box" class="col-md-12">
+                    <form id="creation-form" class="form" action="" method="post">
+                        <div class="form-group mt-4">
+                            <label for="email">Adresse mail :</label><br>
+                            <input type="text" name="username" id="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mot de passe :</label><br>
+                            <input type="text" name="password" id="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmation">Confirmer le mot de passe:</label><br>
+                            <input type="text" name="confirmation" id="confirmation" class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group text-center">
+                                    <button id="btnAjouter" type="button" class="btn btn-success" style="margin-top: 25px">Valider
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group text-center mt-4">
+                                    <div id="msg"></div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group text-center">
+                                    <button type="button" class="btn btn-danger" style="margin-top: 25px">
+                                        <a href="../index.html" class="text-white" style="text-decoration: none">Retour</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="pied"></div>
+
+</body>
+</html>

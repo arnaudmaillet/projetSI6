@@ -4,7 +4,7 @@
     <title>Formulaire de création de compte</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="icon" type="image/png" href="../img/gsb_logo.png">
+    <link rel="icon" type="image/png" href="../img/logo.png">
 
     <link rel="stylesheet" href="css/webfonts/all.min.css">
     <link rel="stylesheet" href="../composant/bootstrap/bootstrap.min.css">
@@ -14,6 +14,7 @@
     <script src="../composant/jquery.js"></script>
     <script src="../composant/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="../composant/confirm/jquery-confirm.min.js"></script>
+    <script src="../js/index.js"></script>
     <script src="js/index.js"></script>
 </head>
 
@@ -56,7 +57,7 @@
                             <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#modalMdp">Changer le mot de passe</button>
                         </div>
                         <div class="col-6">
-                            <button type="button" class="btn btn-danger btn-lg">Supprimer le compte</button>
+                            <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#modalSuppression">Supprimer le compte</button>
                         </div>
                     </div>
 
@@ -67,7 +68,7 @@
 </div>
 
 <!-- Modal changer mdp -->
-<div class="modal fade" id="modalMdp" tabindex="-1" role="dialog" aria-labelledby="modalMdp" aria-hidden="true">
+<div class="modal fade modal1" id="modalMdp" tabindex="-1" role="dialog" aria-labelledby="modalMdp" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -88,12 +89,30 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-success">Enregistrer</button>
+                <button type="button" class="btn btn-success">Confirmer</button>
             </div>
         </div>
     </div>
 </div>
 
+
+<!-- Modal suppression -->
+<div class="modal fade modal2" id="modalSuppression" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalSuppression" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSuppressionLabel">Confirmer votre mot de passe</h5>
+            </div>
+            <div class="modal-body">
+                <input type="password" class="form-control" id="passwordConfirm">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                <button type="button" id="confirmerSuppression" class="btn btn-success">Confirmer la suppression</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div id="pied"></div>
