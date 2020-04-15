@@ -1,0 +1,51 @@
+html  {
+    height: 100%;
+    font-size: 70%;  /* 62.5% of 16px = 10px */
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    /*background-color: #6b747d;*/
+    background-image: url("../../img/bg2.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 90vh;
+}
+
+.form-box {
+    max-width: 500px;
+    padding: 50px;
+    background: #ffffff;
+    border: 10px solid #f2f2f2;
+    margin-top: 100px;
+    animation:flyin 1s;
+}
+
+h1, p {
+    text-align: center;
+}
+
+button, textarea {
+    width: 100%;
+}
+
+.fas{
+    color: #007aff;
+}
+
+/* Effet up du container */
+@keyframes flyin{
+    from{ transform:translateY(100%); opacity:0; }
+    to{ transform:translateY(0%); }
+}
+
+
+#modalPassword{
+    padding-top: 250px;
+}
+

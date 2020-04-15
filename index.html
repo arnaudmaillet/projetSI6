@@ -14,6 +14,8 @@
     <script src="composant/jquery.js"></script>
     <script src="composant/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="composant/confirm/jquery-confirm.min.js"></script>
+
+    <script src="composant/personnel/class.std.js"></script>
     <script src="js/index.js"></script>
 </head>
 
@@ -21,46 +23,54 @@
 
 <div id="menu"></div>
 
-<div id="login">
-    <h3 class="text-center text-white pt-5">Page de connexion</h3>
-    <div class="container">
-        <div id="login-row" class="row justify-content-center align-items-center">
-            <div id="login-column" class="col-md-6">
-                <div id="login-box" class="col-md-12">
-                    <form id="login-form" class="form" action="" method="post">
-                        <h3 class="text-center">Connexion</h3>
-                        <div class="form-group">
-                            <label for="email" class="">Login (email de l'utilisateur)</label><br>
-
-                            <!-- Label Password -->
-                            <input type="text" id="email" class="form-control">
-
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="">Mot de passe:</label><br>
-
-                            <!-- Label Password -->
-                            <input type="password" id="password" class="form-control">
-                            <span id='messagePassword' class='text-danger'></span>
-
-                        </div>
-                        <div class="form-group">
-                            <label for="remember-me" class=""><span>Se souvenir de moi</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-
-                            <!-- Btn Connexion -->
-                            <button id="btnValider" type="button" class="btn btn-success" style="margin-top: 25px">
-                                <!--<a href="pageSession/session.html"> --> Connexion <!--</a> -->
-                            </button>
-                        </div>
-                        <div id="register-link" class="text-right">
-                            <a href="pageCreation/creationSession.html" class="text-dark" style="text-decoration: none">Créer son compte ici</a>
-                        </div>
-                    </form>
+<div class="container d-flex h-100">
+    <div class="row align-self-center vw-100">
+        <div class="col-lg-4 offset-lg-2 col-md-6 col-sm-6 cadreTitre rounded text-white">
+            <div class="title">
+                Administration<br>
+                des<br>
+                comptes
+            </div>
+            <p class="d-flex justify-content-end creator">By MAILLET Arnaud & MARTIN Aurélien</p>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-4 p-5 shadow-sm bg-white border rounded cadreForm">
+            <div class="pt-5 pb-5">
+                <img class="rounded mx-auto d-block" src="img/login.png" alt="" width=70px height=70px>
+                <div class="form text-center">
+                    <div class="form-group input-group-md mt-5">
+                        <input type="email" name="email" id="email" class="form-control text-center" placeholder="Adresse email">
+                    </div>
+                    <div class="form-group input-group-md mt-5">
+                        <input type="password" class="form-control text-center" id="password" placeholder="Mot de passe">
+                    </div>
+                    <div id="msgConnexion" class="text-danger"></div>
+                    <button id="btnValider" class="btn btn-lg btn-block btn-primary mt-5">Connexion</button>
+                    <a href="#" class="float-right mt-2" data-toggle="modal" data-target="#modalPasswordOubli">Mot de passe oublié ?</a>
                 </div>
+            </div>
+            <a href="pageCreation/creationSession.html" class="text-center d-block mt-2">Créer son compte ici</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal mot de passe oublié -->
+<div class="modal fade" id="modalPasswordOubli" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalPasswordOubli" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <label>Entrez votre adresse email reliée à votre compte :</label>
+                <input type="email" class="form-control text-center" id="inputPasswordOubli">
+                <div id="msgPasswordOubli" class="text-danger text-center"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                <button type="button" id="btnFormPasswordOubli" class="btn btn-success">Valider</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <div id="pied"></div>
 

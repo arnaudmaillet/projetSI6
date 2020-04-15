@@ -4,7 +4,7 @@ Create database connexion;
 
 Use connexion;
 
-Create table Utilisateur (
+Create table Session (
 	id int auto_increment,
 	email varchar(50) not null,
 	password varchar(30) not null,
@@ -13,10 +13,19 @@ Create table Utilisateur (
 	avatar varchar(50) null,
 	typeCompte char(1) not null,
 	etatCompte char(1) not null,
+    nbEssai int not null,
 	primary key (id)
 ) engine = innoDB;
 
-insert into Utilisateur (email, password, nom, prenom, typeCompte, etatCompte) values 
-("aurelien.martin@saint-remi.net", "1111", "Martin", "Aurélien", "U", "E"),
-("arnaud.maillet@saint-remi.net", "1111", "Maillet", "Arnaud", "U", "E");
+insert into Session (email, password, nom, prenom, typeCompte, etatCompte, nbEssai) values 
+("aurelien.martin@saint-remi.net", "1111", "Martin", "Aurélien", "U", "E", 3);
+
+insert into Session (email, password, nom, prenom, typeCompte, etatCompte, nbEssai) values 
+("arnaud.maillet@saint-remi.net", "1111", "Maillet", "Arnaud", "U", "E", 3);
+
+select * from Session;
+
+Select etatCompte from Session
+    where etatCompte = 'E';
+
 

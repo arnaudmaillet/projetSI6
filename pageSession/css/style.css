@@ -1,86 +1,89 @@
-html  {
-    height: 100%;
-    font-size: 50%;  /* 62.5% of 16px = 10px */
+html{
+    font-family: 'Ubuntu', sans-serif;
+    color:#444;
+    height:100%;
+    font-size: 0.7em;
+}
+body{
+    background-color:#222;
+    font-family: 'Ubuntu', sans-serif;
+    background-image: url("../../img/bg3.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+    height: 90vh;
+}
+*:after{
+    content: " ";
+    clear:both;
+    display:block;
+}
+.cadre{
+    max-width:500px;
+    margin-top: 150px;
+    background:#FFF;
+    box-sizing:border-box;
+    padding:20px;
+    text-align:center;
+    border-radius:4px;
+    animation:flyin 1s;
+    box-shadow:0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+hr{
+    height:1px;
+    border:none;
+    background:radial-gradient(#000, #999);
+    opacity:0.2;
+    margin:20px 0px;
+}
+.title{
+    font-size:18px;
+}
+img{
+    height: 100px;
 }
 
-body {
-    font-family: 'Open Sans', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #007bff;
-    height: 100vh;
+
+/* Effet up du container */
+@keyframes flyin{
+    from{ transform:translateY(100%); opacity:0; }
+    to{ transform:translateY(0%); }
 }
 
-#creation .container #creation-row #creation-column #creation-box {
-    margin-top: 120px;
-    max-width: 600px;
-    height: 320px;
-    border: 1px solid #9C9C9C;
-    background-color: #EAEAEA;
-}
-#creation .container #creation-row #creation-column #creation-box #creation-form {
-    padding: 20px;
+button{
+    width: 100%;
 }
 
-p {
-    font-size: 1.2rem;
+.case{
+    min-width: 200px;
 }
 
-.modal1{
-    padding: 200px;
-}
-
-.modal2{
-    padding: 300px;
+.w{
+    width: 100%;
 }
 
 
-/* fixer certains paramètres en fonction de la taille de l'écran
-Extra small <576px	Small ≥576px	 Medium ≥768px Large ≥992px	 Extra large ≥1200px
-*/
 
-/* pour une taille inférieure à 576 px */
-@media (max-width: 576px) {
-    .masquer {
-        display : none;
-    }
-    .card-columns {
-        column-count: 1;
-    }
+/* Hauteur Modals */
+#modalPrenom{
+    padding-top: 300px;
 }
 
-/* à partir de 576 px */
-@media (min-width: 576px) {
-    html  { font-size: 75.0%;  /* 75% of 16px = 12px */}
-    .card-columns {
-        column-count: 2;
-    }
+#modalNom{
+    padding-top: 300px;
 }
 
-/* à partir de 768 px  */
-@media (min-width: 768px) {
-    .card-columns {
-        column-count: 2;
-    }
+#modalPassword{
+    padding-top: 250px;
 }
 
-/* à partir de 992 px  */
-@media (min-width: 992px) {
-    .card-columns {
-        column-count: 3;
-    }
+#modalSuppression{
+    padding-top: 300px;
 }
 
-/* à partir de 1200 px */
-@media (min-width: 1200px) {
-    .card-columns {
-        column-count: 4;
-    }
-}
 
-/* à partir de 1600 px  */
-@media (min-width: 1600px) {
-    .card-columns {
-        column-count: 5;
-    }
-}
+
+
+

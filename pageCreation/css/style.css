@@ -1,74 +1,59 @@
 html  {
     height: 100%;
-    font-size: 50%;  /* 62.5% of 16px = 10px */
+    font-size: 0.7em;  /* 62.5% of 16px = 10px */
+    overflow: hidden;
 }
 
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #007bff;
-    height: 100vh;
+    background-image: url("../../img/bg.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    /*background-color: #6b747d;*/
+    height: 90vh;
 }
 
-#creation .container #creation-row #creation-column #creation-box {
-    margin-top: 120px;
-    max-width: 600px;
-    height: 320px;
-    border: 1px solid #9C9C9C;
-    background-color: #EAEAEA;
-}
-#creation .container #creation-row #creation-column #creation-box #creation-form {
-    padding: 20px;
+.fix{
+    position: fixed;
+    top: 480px;
+    left: 44%;
 }
 
-
-/* fixer certains paramètres en fonction de la taille de l'écran
-Extra small <576px	Small ≥576px	 Medium ≥768px Large ≥992px	 Extra large ≥1200px
-*/
-
-/* pour une taille inférieure à 576 px */
-@media (max-width: 576px) {
-    .masquer {
-        display : none;
-    }
-    .card-columns {
-        column-count: 1;
-    }
+.fontRed{
+    font-size: 0.7rem;
+    color: red;
+    width: 100px;
 }
 
-/* à partir de 576 px */
-@media (min-width: 576px) {
-    html  { font-size: 75.0%;  /* 75% of 16px = 12px */}
-    .card-columns {
-        column-count: 2;
-    }
+
+.form-box {
+    max-width: 500px;
+    padding: 50px;
+    background: #ffffff;
+    border: 10px solid #f2f2f2;
+    margin-top: 100px;
+    animation:opacity 1s;
 }
 
-/* à partir de 768 px  */
-@media (min-width: 768px) {
-    .card-columns {
-        column-count: 2;
-    }
+h1, p {
+    text-align: center;
 }
 
-/* à partir de 992 px  */
-@media (min-width: 992px) {
-    .card-columns {
-        column-count: 3;
-    }
+button, textarea {
+    width: 100%;
 }
 
-/* à partir de 1200 px */
-@media (min-width: 1200px) {
-    .card-columns {
-        column-count: 4;
-    }
+.fas{
+    color: #007aff;
 }
 
-/* à partir de 1600 px  */
-@media (min-width: 1600px) {
-    .card-columns {
-        column-count: 5;
-    }
+
+/* Effet opacité lié a animation de form-box*/
+@keyframes opacity{
+    from{opacity:0%;}
+    to{opacity:100%;}
 }

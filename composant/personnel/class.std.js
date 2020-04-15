@@ -217,7 +217,7 @@ class Std {
         let zone = $('#' + idZone);
         zone.hide();
         let contenu = "<div id='leMessage' class='alert alert-dismissable " + classe + "'>";
-        contenu += "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+        //contenu += "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
         contenu += message + "</div>";
         zone.html(contenu);
         zone.slideDown("slow");
