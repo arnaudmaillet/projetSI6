@@ -37,8 +37,9 @@ else{
     <script src="js/index.js"></script>
 </head>
 
-<body>
+<body class="px-0">
 <div id="menu"></div>
+
 
 <div class="container d-flex h-100">
     <div class="row align-self-center vw-100">
@@ -200,6 +201,7 @@ else{
 
 
 <div id="pied"></div>
+
 
 
 </body>

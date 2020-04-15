@@ -31,7 +31,7 @@ else{
     <script src="js/index.js"></script>
 </head>
 
-<body class="">
+<body class="px-0">
 <div id="menu"></div>
 
 <div class="container d-flex h-100">

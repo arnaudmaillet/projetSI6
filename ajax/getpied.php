@@ -1,4 +1,4 @@
-<footer class="page-footer font-small fixed-bottom bg-dark text-white" style="z-index: 10">
+<footer class="page-footer font-small fixed-bottom bg-dark text-white px-0" style="z-index: 10; width: 100%">
     <div class="container-fluid">
         <div class="row justify-content-end">
             <div class="col-8 text-center footer-copyright py-3 my-auto" style="height: 35px">© 2020 Copyright:

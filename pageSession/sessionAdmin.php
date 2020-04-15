@@ -25,7 +25,7 @@
     <script src="js/index.js"></script>
 </head>
 
-<body>
+<body class="px-0">
 <div id="menu"></div>
 
 <div id="pied"></div>
