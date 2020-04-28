@@ -1,16 +1,22 @@
+// Initialisation des variables
 let email;
 let password;
 let messageConnexion;
 let emailPasswordOubli;
+let msgSessionBloque;
+let editor;
 
 
 $(function () {
+    // Chargement du menu et du pied
     $('#menu').load('ajax/getmenu.php');
     $('#pied').load('ajax/getpied.php');
 
+    // Attibutions des variables
     email = document.getElementById('email');
     password = document.getElementById('password');
     emailPasswordOubli = document.getElementById('inputPasswordOubli');
+    msgSessionBloque = document.getElementById('msgSessionBloque');
 
     // Balise message de connexion
     messageConnexion = document.getElementById('msgConnexion');
@@ -42,16 +48,36 @@ $(function () {
     $('#btnValider').click(controlerConnexion);
     // le clic sur le bouton btnFormPasswordOubli doir lancer la fonction controlerPasswordOubli
     $('#btnFormPasswordOubli').click(controlerPasswordOubli);
+    // le clic sur le bouton btnMsgSessionBloque doir lancer la fonction ajouterMsgSessionBloque
+    $('#btnMsgSessionBloque').click(ajouterMsgSessionBloque);
 
+    // configuration ckEditor
+    let parametre = {
+        toolbar: {
+            items: [ 'heading', '|', 'bold', 'italic', 'fontBackgroundColor',
+                'fontColor',  'fontSize',  'fontFamily', 'link', 'bulletedList', 'numberedList',
+                '|', 'indent', 'outdent', '|', 'imageUpload', 'blockQuote',  'insertTable',  'undo',  'redo' ] },
+        language: 'fr',
+        image: {
+            toolbar: [ 'imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
+            styles: ['full', 'alignLeft', 'alignRight']
+        },
+        table: {
+            contentToolbar: ['tableColumn', 'tableRow','mergeTableCells' ]
+        },
+    };
+    ClassicEditor.create(msgSessionBloque, parametre).then(newEditor =>{editor = newEditor;});
 
 });
 
+// ----------------------------------------------------------------------------------
+// Gestion du formulaire de connexion
+// ----------------------------------------------------------------------------------
 
-// Connexion
 function controlerConnexion() {
     let emailOk = controler(email);
     let passwordOk = controler(password);
-    if (emailOk == false || passwordOk == false)
+    if (emailOk === false || passwordOk === false)
         messageConnexion.innerText = "Champ requis !";
     else
         connecter();
@@ -73,17 +99,19 @@ function connecter() {
         },
         dataType: "json",
         success: function (data) {
-            if (data == -3)
-                messageConnexion.innerText = "Compte inexistant ! Veuillez créer votre compte en cliquant sur 'Créer son compte ici'";
-            else if (data == 3)
-                messageConnexion.innerText = "Email ou mot de passe non valide ! il vous reste 3 essais";
-            else if (data == 2)
-                messageConnexion.innerText = "Email ou mot de passe non valide ! il vous reste 2 essais";
-            else if (data == 1)
-                messageConnexion.innerText = "Email ou mot de passe non valide ! il vous reste 1 essai";
-            else if (data == -2)
-                messageConnexion.innerText = "Le compte a été suspendu, Veuillez contacter l'administrateur !";
-            else if (data == -1)
+            if (data === -4)
+                messageConnexion.innerHTML = "Compte inexistant ! Veuillez créer votre compte en cliquant <a href='pageCreation/creationSession.html'>ici </a>";
+            else if (data === 3)
+                messageConnexion.innerText = "Mot de passe non valide ! il vous reste 3 essais";
+            else if (data === 2)
+                messageConnexion.innerText = "Mot de passe non valide ! il vous reste 2 essais";
+            else if (data === 1)
+                messageConnexion.innerText = "Mot de passe non valide ! il vous reste 1 essai";
+            else if (data === -3)
+                messageConnexion.innerText = "Le compte est suspendu et vous avez déjà envoyé un message à l'administrateur. Vous allez bientôt recevoir une réponse dans votre boite mail !";
+            else if (data === -2)
+                messageConnexion.innerHTML = "Le compte a été suspendu, Vous pouvez contacter l'administrateur <a href='#' data-toggle=\"modal\" data-target=\"#modalMsgSessionBloque\">ici</a> !";
+            else if (data === -1)
                 document.location.href = "pageSession/sessionAdmin.php";
             else
                 document.location.href = "pageSession/sessionUser.php";
@@ -97,7 +125,7 @@ function connecter() {
 // PasswordOubli
 function controlerPasswordOubli() {
     let emailPasswordOubliOK = controler(emailPasswordOubli);
-    if (emailPasswordOubliOK == false)
+    if (emailPasswordOubliOK === false)
         Std.afficherMessage('msgPasswordOubli', 'Champ requis !', 'rouge', 2);
     else
         passwordOubli();
@@ -114,7 +142,7 @@ function passwordOubli() {
         },
         dataType: "json",
         success: function (data) {
-            if (data == 0)
+            if (data === 0)
                 Std.afficherMessage('msgPasswordOubli', 'Le compte n\'existe pas !', 'rouge', 2);
             else
                 document.location.href = "pageOubli/oubli.php";
@@ -125,10 +153,36 @@ function passwordOubli() {
     })
 }
 
+function ajouterMsgSessionBloque() {
+    msgSessionBloque.value = editor.getData();
+    if (msgSessionBloque.value.length > 0){
+        $.ajax({
+            url: "ajax/msgSessionBloque.php",
+            type: 'post',
+            data: {
+                msgSessionBloque: msgSessionBloque.value,
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data === 1)
+                    Std.afficherMessage('confirmationSessionBloque', 'Le message à bien été envoyé, vous allez bientôt recevoir une réponse sur votre boite mail !', 'vert', 4);
+                setTimeout(redirection, 4000);
+            },
+            error: function (request) {
+                $.dialog({title: '', content: request.responseText, type: 'red'});
+            }
+        })
+    }
+}
+
 // autres fonctions
 function controler(input) {
     input.value = input.value.trim();
     let valeur = input.value;
     if (valeur.length === 0)
         return false;
+}
+
+function redirection() {
+    document.location.href = "ajax/deconnexion.php";
 }

@@ -5,32 +5,33 @@ html{
     font-size: 0.7em;
 }
 body{
-    background-color:#222;
     font-family: 'Ubuntu', sans-serif;
     background-image: url("../../img/bg3.jpg");
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    overflow: hidden;
-    height: 90vh;
+    height: 100%;
 }
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
 *:after{
     content: " ";
     clear:both;
     display:block;
 }
 .cadre{
-    max-width:500px;
-    margin-top: 150px;
-    background:#FFF;
+    background: #FFF;
     box-sizing:border-box;
-    padding:20px;
-    text-align:center;
+    padding:15px;
     border-radius:4px;
-    animation:flyin 1s;
+    animation:opacity 1.5s;
     box-shadow:0px 4px 8px rgba(0, 0, 0, 0.5);
 }
+
 hr{
     height:1px;
     border:none;
@@ -45,28 +46,60 @@ img{
     height: 100px;
 }
 
-
-/* Effet up du container */
-@keyframes flyin{
-    from{ transform:translateY(100%); opacity:0; }
-    to{ transform:translateY(0%); }
-}
-
 button{
     width: 100%;
 }
 
-.case{
-    min-width: 200px;
-}
-
-.w{
+/* Parametres de la scrollbar de la balise div du profil */
+.profil{
     width: 100%;
+    margin-top: 30px;
 }
 
+/* Parametres de la scrollbar de la balise div du forum et des reponses du forum */
+.forum {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    padding: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
 
+.forum::-webkit-scrollbar {
+    display: block;
+}
+
+.forum::-webkit-scrollbar {
+    display: none;
+}
+
+.forumReponses{
+    position: relative;
+    width: 100%;
+    max-height: 400px;
+    padding: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.forumReponses::-webkit-scrollbar {
+    display: block;
+}
+
+.forumReponses::-webkit-scrollbar {
+    display: none;
+}
+
+/* Effet up du container */
+@keyframes opacity{
+    from{opacity:0%;}
+    to{opacity:100%;}
+}
 
 /* Hauteur Modals */
+
+/* User */
 #modalPrenom{
     padding-top: 300px;
 }
@@ -83,7 +116,108 @@ button{
     padding-top: 300px;
 }
 
+/* Admin */
+#modalNomPrenom{
+    padding-top: 300px;
+}
+
+/* Forum */
+#fenAjoutTheme{
+    padding-top: 300px;
+}
+
+#fenAjoutQuestion{
+    padding-top: 200px;
+}
+
+#fenReponse{
+    padding-top: 100px;
+    max-height: 1200px;
+}
+
+@media (max-width: 1000px) {
+    .forum{
+        height: 650px;
+    }
+    .date{
+        font-size: 0.9em;
+    }
+    #sessionsD{
+        font-size: 0.7em;
+    }
+}
 
 
+@media (max-width: 760px) {
+    #admin{
+        height: auto;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+    #sessionsD{
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 880px) {
+    .date{
+        font-size: 0.66666em;
+    }
+}
 
 
+@media (min-width: 1100px) {
+    .cadre{
+        min-height: 50vh;
+    }
+}
+
+/* Adaptation mobile */
+
+@media (max-width: 576px) {
+    nav img{
+        display: none;
+    }
+    body{
+        height: auto;
+        background-image: none;
+    }
+    .cadre{
+        height: 100%;
+        margin-top: 20px;
+        background: none;
+        box-shadow: none;
+    }
+    .forum{
+        height: 600px;
+    }
+
+    .profil button{
+        min-width: 50px;
+    }
+    .date{
+        font-size: 0.55555em;
+    }
+    .copyright{
+        font-size: 0.7em;
+    }
+    #sessionsD{
+        font-size: 0.8em;
+    }
+}
+
+@media (min-width: 576px) {
+    .profil{
+        margin: auto;
+    }
+}
+
+@media (max-height: 600px) {
+    .title{
+        font-size: 0.9em;
+        margin-left: 20px;
+    }
+    .row button{
+        font-size: 0.9em;
+    }
+}

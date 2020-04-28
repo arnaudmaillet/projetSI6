@@ -38,9 +38,10 @@ elseif ($password != $confirmation)
     echo "0";
 else{
     // requêtre d'ajout
+    // on rentre un champ vide pour le nom et prénom si l'utilisateur souhaite récupérer son mdp sans avoir renseigné son nom ou prénom
     $sql = <<<EOD
-    insert into session(email, password, typeSession, etatSession, nbEssai, question, reponse)
-           values (:email, :password, "U", "E", 3, :question, :reponse);
+    insert into session(email, password, nom, prenom, typeSession, etatSession, nbEssai, question, reponse)
+           values (:email, :password, "", "", "U", "E", 3, :question, :reponse);
 EOD;
     $curseur = $db->prepare($sql);
     $curseur->bindParam('email', $email);

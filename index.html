@@ -14,6 +14,8 @@
     <script src="composant/jquery.js"></script>
     <script src="composant/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="composant/confirm/jquery-confirm.min.js"></script>
+    <script src="composant/ckeditor/ckeditor.js"></script>
+    <script src="js/index.js?ver=1"></script>
 
     <script src="composant/personnel/class.std.js"></script>
     <script src="js/index.js"></script>
@@ -59,7 +61,7 @@
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <label>Entrez votre adresse email reliée à votre compte :</label>
+                <label>Entrez l'adresse email reliée à votre compte :</label>
                 <input type="email" class="form-control text-center" id="inputPasswordOubli">
                 <div id="msgPasswordOubli" class="text-danger text-center"></div>
             </div>
@@ -71,6 +73,27 @@
     </div>
 </div>
 
+<!-- Modal message session bloquée -->
+<div class="modal fade" id="modalMsgSessionBloque" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="modalMsgSessionBloque" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ecrivez votre message</h5>
+                </div>
+                <div class="modal-body">
+                    <textarea id="msgSessionBloque"></textarea>
+                    <div id="confirmationSessionBloque" class="text-success text-center"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                    <button type="button" id="btnMsgSessionBloque" class="btn btn-success">Envoyer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="pied"></div>
 

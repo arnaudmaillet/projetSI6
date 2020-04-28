@@ -1,3 +1,4 @@
+// Initialisation variables de session
 let inputNom;
 let inputPrenom;
 let inputPasswordModification;
@@ -5,67 +6,77 @@ let inputPasswordSuppression;
 let inputNewPassword;
 let inputConfirmPassword;
 
+
 $(function () {
+    // Chargement du menu et du pied
     $('#menu').load('ajax/getmenu.php');
     $('#pied').load('../ajax/getpied.php');
 
+
+    // Attibutions variables de session
     inputNom = document.getElementById('inputNom');
     inputPrenom = document.getElementById('inputPrenom');
-
     inputPasswordModification = document.getElementById('inputPasswordModification');
     inputNewPassword = document.getElementById('newPassword');
     inputConfirmPassword = document.getElementById('confirmPassword');
-
     inputPasswordSuppression = document.getElementById('inputPasswordSuppression');
 
-    //Touche entrée
-    inputNom.onkeypress = function(e){
-      if (e.key === "Enter"){
-          $("#inputNom").blur();
-          controlerNomModification();
-      }
+
+    // Attribution de la touche entrée
+    inputNom.onkeypress = function (e) {
+        if (e.key === "Enter") {
+            $("#inputNom").blur();
+            controlerNomModification();
+        }
     };
 
-    inputPrenom.onkeypress = function(e){
-        if (e.key === "Enter"){
+    inputPrenom.onkeypress = function (e) {
+        if (e.key === "Enter") {
             $("#inputPrenom").blur();
             controlerPrenomModification();
         }
     };
 
-    inputPasswordModification.onkeypress = function(e){
-        if (e.key === "Enter"){
+    inputPasswordModification.onkeypress = function (e) {
+        if (e.key === "Enter") {
             controlerPasswordModification();
         }
     };
-    inputNewPassword.onkeypress = function(e){
-        if (e.key === "Enter"){
+    inputNewPassword.onkeypress = function (e) {
+        if (e.key === "Enter") {
             controlerPasswordModification();
         }
     };
-    inputConfirmPassword.onkeypress = function(e){
-        if (e.key === "Enter"){
+    inputConfirmPassword.onkeypress = function (e) {
+        if (e.key === "Enter") {
             controlerPasswordModification();
         }
     };
 
-    // On ne peut pas supprimer un compte en validant par la touche entrer
-    inputPasswordSuppression.onkeypress = function(e){
-        if (e.key === "Enter"){
+    // On ne peut pas supprimer un compte en utilisant la touche entrer
+    inputPasswordSuppression.onkeypress = function (e) {
+        if (e.key === "Enter") {
             Std.afficherMessage('msgSuppression', 'Veuillez cliquer sur le bouton \'Valider\' pour confirmer la suppression', 'rouge', 2);
         }
     };
 
+    // Attribution des gestionnaires d'événement
     $('#btnPassword').click(controlerPasswordModification);
     $('#confirmerSuppression').click(controlerSuppression);
     $('#confirmerNom').click(controlerNomModification);
     $('#confirmerPrenom').click(controlerPrenomModification);
+
 });
 
+
+// ----------------------------------------------------------------------------------
+// Gestion de la session
+// ----------------------------------------------------------------------------------
+
 // ModificationPrenom
-function controlerPrenomModification(){
+function controlerPrenomModification() {
     let prenomOK = controler(inputPrenom);
-    if (prenomOK == false)
+    if (prenomOK === false)
         Std.afficherMessage('msgPrenomModification', 'Champ requis !', 'rouge', 2);
     else
         PrenomModifier();
@@ -73,7 +84,7 @@ function controlerPrenomModification(){
 
 function PrenomModifier() {
     $.ajax({
-        url: 'ajax/modifierPrenom.php',
+        url: 'ajax/session/modifierPrenom.php',
         type: 'POST',
         data: {
             prenom: inputPrenom.value,
@@ -83,10 +94,9 @@ function PrenomModifier() {
             $.dialog({title: '', content: request.responseText, type: 'red'});
         },
         success: function (data) {
-            if (data == 0){
+            if (data === 0) {
                 Std.afficherMessage('msgPrenomModificationOK', 'Ce nom est déjà votre Prenom actuel !', 'vert', 2);
-            }
-            else {
+            } else {
                 Std.afficherMessage('msgPrenomModificationOK', 'Modification appliquée !', 'vert', 2);
                 setTimeout(reload, 2000);
             }
@@ -96,9 +106,9 @@ function PrenomModifier() {
 }
 
 // ModificationNom
-function controlerNomModification(){
+function controlerNomModification() {
     let nomOK = controler(inputNom);
-    if (nomOK == false)
+    if (nomOK === false)
         Std.afficherMessage('msgNomModification', 'Champ requis !', 'rouge', 2);
     else
         NomModifier();
@@ -106,7 +116,7 @@ function controlerNomModification(){
 
 function NomModifier() {
     $.ajax({
-        url: 'ajax/modifierNom.php',
+        url: 'ajax/session/modifierNom.php',
         type: 'POST',
         data: {
             nom: inputNom.value,
@@ -116,10 +126,9 @@ function NomModifier() {
             $.dialog({title: '', content: request.responseText, type: 'red'});
         },
         success: function (data) {
-            if (data == 0){
+            if (data === 0) {
                 Std.afficherMessage('msgNomModificationOK', 'Ce nom est déjà votre nom actuel !', 'vert', 2);
-            }
-            else {
+            } else {
                 Std.afficherMessage('msgNomModificationOK', 'Modification appliquée !', 'vert', 2);
                 setTimeout(reload, 2000);
             }
@@ -133,11 +142,11 @@ function controlerPasswordModification() {
     let newPasswordOK = controler(inputNewPassword);
     let confirmPasswordOK = controler(inputConfirmPassword);
     let inputPasswordOK = controler(inputPasswordModification);
-    if (newPasswordOK == false)
+    if (newPasswordOK === false)
         Std.afficherMessage('msgPasswordModification1', 'Champ requis !', 'rouge', 2);
-    else if(confirmPasswordOK == false)
+    else if (confirmPasswordOK === false)
         Std.afficherMessage('msgPasswordModification2', 'Champ requis !', 'rouge', 2);
-    else if(inputPasswordOK == false)
+    else if (inputPasswordOK === false)
         Std.afficherMessage('msgPasswordModification3', 'Champ requis !', 'rouge', 2);
     else
         PasswordModifier();
@@ -145,7 +154,7 @@ function controlerPasswordModification() {
 
 function PasswordModifier() {
     $.ajax({
-        url: 'ajax/modifierPassword.php',
+        url: 'ajax/session/modifierPassword.php',
         type: 'POST',
         data: {
             passwordNew: inputNewPassword.value,
@@ -157,15 +166,15 @@ function PasswordModifier() {
             $.dialog({title: '', content: request.responseText, type: 'red'});
         },
         success: function (data) {
-            if(data == -3)
+            if (data === -3)
                 Std.afficherMessage('msgPasswordModification', 'Le mot de passe doit contenir entre 8 et 15 caractères !', 'red', 3);
-            else if(data == -2)
+            else if (data === -2)
                 Std.afficherMessage('msgPasswordModification', 'Les mots de passe de correspondent pas !', 'red', 3);
-            else if(data == -1)
+            else if (data === -1)
                 Std.afficherMessage('msgPasswordModification', 'Votre nouveau mot de passe doit être différent de l\'ancien !', 'red', 3);
-            else if(data == 0)
+            else if (data === 0)
                 Std.afficherMessage('msgPasswordModification', 'Mot de passe incorrect !', 'red', 3);
-            else{
+            else {
                 Std.afficherMessage('msgPasswordModificationOK', 'Votre mot de passe a bien été changé, Il faudra rentrer le nouveau mot de passe lors de la prochaine connexion !', 'vert', 5);
                 setTimeout(reload, 5000);
             }
@@ -177,16 +186,15 @@ function PasswordModifier() {
 // Suppression
 function controlerSuppression() {
     let passwordOK = controler(inputPasswordSuppression);
-    if (passwordOK == false){
+    if (passwordOK === false) {
         Std.afficherMessage('msgSuppression', 'Champ requis !', 'rouge', 2);
-    }
-    else
+    } else
         controlerSuppressionPassword();
 }
 
 function controlerSuppressionPassword() {
     $.ajax({
-        url: 'ajax/controlerSupprimer.php',
+        url: 'ajax/session/controlerSupprimer.php',
         type: 'POST',
         data: {
             password: inputPasswordSuppression.value,
@@ -196,10 +204,9 @@ function controlerSuppressionPassword() {
             $.dialog({title: '', content: request.responseText, type: 'red'});
         },
         success: function (data) {
-            if (data == 1){
+            if (data === 1) {
                 confirmerSuppression();
-            }
-            else {
+            } else {
                 Std.afficherMessage('msgSuppression', 'Mot de passe incorrect !', 'rouge', 2)
             }
 
@@ -235,7 +242,7 @@ function confirmerSuppression() {
 
 function supprimer() {
     $.ajax({
-        url: 'ajax/supprimer.php',
+        url: 'ajax/session/supprimer.php',
         type: 'POST',
         data: {},
         dataType: "json",
@@ -243,11 +250,10 @@ function supprimer() {
             $.dialog({title: '', content: request.responseText, type: 'red'});
         },
         success: function (data) {
-            if(data == 0){
+            if (data === 0) {
                 Std.afficherMessage('msgSuppressionOK', 'Suppression effectué, Veuillez patienter vous allez être redirigé vers la page d\'accueil !', 'vert', 5);
                 setTimeout(redirection, 5000);
-            }
-            else
+            } else
                 $.dialog({title: '', content: request.responseText, type: 'red'});
         }
     })
@@ -255,7 +261,6 @@ function supprimer() {
 
 
 // Autres fonctions
-
 function controler(input) {
     input.value = input.value.trim();
     let valeur = input.value;
@@ -267,6 +272,10 @@ function redirection() {
     document.location.href = "../ajax/deconnexion.php";
 }
 
-function reload(){
+function reload() {
     location.reload();
+}
+
+function erreurAjax(request) {
+    $.dialog({title: '', content: request.responseText, type: 'red',});
 }

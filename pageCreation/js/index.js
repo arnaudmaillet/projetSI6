@@ -1,10 +1,17 @@
+// Initialisation des variables
 let inputEmail;
 let inputPassword;
 let inputConfirmation;
 let question;
 let inputReponse;
 
+
 $(function () {
+    // Chargement du menu et du pied
+    $('#menu').load('ajax/getmenu.php');
+    $('#pied').load('../ajax/getpied.php');
+
+    // Attibutions des variables
     inputEmail = document.getElementById('email');
     inputPassword = document.getElementById('password');
     inputConfirmation = document.getElementById('confirmation');
@@ -31,31 +38,32 @@ $(function () {
         }
     };
 
-    reponse.onkeypress = function(e){
+    inputReponse.onkeypress = function(e){
         if(e.key === "Enter") {
             controlerAjout();
         }
     };
 
-
-    $('#menu').load('ajax/getmenu.php');
-    $('#pied').load('../ajax/getpied.php');
+    // Attribution du btnAjouter
     $('#btnAjouter').click(controlerAjout);
 });
 
-// Ajout
+// ----------------------------------------------------------------------------------
+// Gestion du formulaire d'ajout
+// ----------------------------------------------------------------------------------
+
 function controlerAjout() {
     let emailOK = controler(inputEmail);
     let passwordOK = controler(inputPassword);
     let confirmOK = controler(inputConfirmation);
     let reponseOK = controler(inputReponse);
-    if (emailOK == false)
+    if (emailOK === false)
         Std.afficherMessage('msgAjout1', 'Champ requis !', 'rouge', 2);
-    else if (passwordOK == false)
+    else if (passwordOK === false)
         Std.afficherMessage('msgAjout2', 'Champ requis !', 'rouge', 2);
-    else if (confirmOK == false)
+    else if (confirmOK === false)
         Std.afficherMessage('msgAjout3', 'Champ requis !', 'rouge', 2);
-    else if (reponseOK == false)
+    else if (reponseOK === false)
         Std.afficherMessage('msgAjout4', 'Champ requis !', 'rouge', 2);
     else
         ajouter();
@@ -79,19 +87,18 @@ function ajouter() {
             $.dialog({title: '', content: request.responseText, type: 'red'});
         },
         success: function (data) {
-            if (data == -3){
+            if (data === -3){
                 Std.afficherMessage('msg', 'Adresse mail non valide !', 'rouge', 3);
             }
-            else if(data == -2)
+            else if(data === -2)
                 Std.afficherMessage('msg', 'Un compte utilisant cette adresse existe déjà !', 'rouge', 3);
-            else if (data == -1)
+            else if (data === -1)
                 Std.afficherMessage('msg', 'Le mot de passe doit contenir entre 8 et 15 caractères !', 'rouge', 3);
-            else if (data == 0)
+            else if (data === 0)
                 Std.afficherMessage('msg', 'Les mots de passe ne correspondent pas !', 'rouge', 3);
             else{
                 // mise à jour de l'interface
-                Std.afficherMessage('msg', 'Le compte a bien été créé ! Vous allez être redirigé vers la page d\'accueil !', 'vert', 4);
-                setTimeout(redirection, 4000);
+                msgAjout();
             }
         }
     })
@@ -108,4 +115,24 @@ function controler(input) {
 
 function redirection() {
     document.location.href = "../ajax/deconnexion.php";
+}
+
+function msgAjout() {
+    let n = new Noty({
+        text: 'Le compte a bien été enregistré ! Nous vous conseillons de vous connecter sur votre session afin d\'y renseigner votre nom ainsi que votre prénom !',
+        layout: 'center',
+        theme: 'sunset',
+        modal: true,
+        type: 'info',
+        animation: {
+            open: 'animated lightSpeedIn',
+            close: 'animated lightSpeedOut'
+        },
+        buttons: [
+            Noty.button('Ok', 'btn btn-sm btn-success marge', function () {
+                n.close();
+                redirection();
+            }),
+        ]
+    }).show();
 }

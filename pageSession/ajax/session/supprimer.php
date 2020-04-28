@@ -1,13 +1,12 @@
 <?php
 session_start();
-require '../../class/class.database.inc.php';
+require '../../../class/class.database.inc.php';
 $db = Database::getInstance();
 
 $email = $_SESSION['user']['email'];
 
 
 
-// Construction de la requete sql
 $sql = <<<EOD
 delete from session
 where email = :email;

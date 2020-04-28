@@ -30,7 +30,7 @@ else
 
 // Cas ou la session n'existe pas
 if(!$ligne['email']){
-    echo "-3";
+    echo "-4";
 }
 // Cas ou le mdp est faux et que le nombre d'essai récupéré dans $ligne['nbEssai'] est > à 0
 // On décrémente donc nbEssai dans la bd
@@ -50,6 +50,10 @@ EOD;
     $nbEssai = $ligne['nbEssai'];
     echo $nbEssai;
 }
+// Cas ou la session est déja bloquée et que l'utilisateur a déjà envoyé un msg à l'administrateur
+elseif ($ligne['msgSessionBloque'] != null){
+    echo "-3";
+}
 // Cas ou le nombre d'essai à été dépassé
 // Mise a jour de etatSession dans la bd
 elseif ($passwordOK == 0 && $ligne['nbEssai'] == 0){
@@ -62,11 +66,14 @@ EOD;
     $curseur->bindParam('email', $email);
     $curseur->execute();
     $curseur->closeCursor();
+    // on récupere l'email de l'utilisateur si il souhaite envoyer un msg a l'administrateur
+    $_SESSION['user']['email'] = $email;
     echo "-2";
 }
-// Cas ou la session est désactivé. Je n'ai pas mis cette condition en || dans celle du dessus car la requete update sur l'etat session
-// ne s'execute qu'une seule fois
+// Cas ou la session est désactivée mais que l'utilisateur à quand meme rentré le bon mdp. Je n'ai pas mis cette condition en || avec celle du dessus car la requete update sur l'etat session ne s'execute qu'une seule fois
 elseif ($ligne['etatSession'] == 'D'){
+    // on récupere l'email de l'utilisateur si il souhaite envoyer un msg a l'administrateur
+    $_SESSION['user']['email'] = $email;
     echo "-2";
 }
 // Si toutes les conditions précédentes n'ont pas été validées --> Cas ou tout est bon
@@ -76,6 +83,7 @@ elseif ($ligne['typeSession'] == 'U'){
     $_SESSION['user']['prenom'] = $ligne['prenom'];
     $_SESSION['user']['nom'] = $ligne['nom'];
     $_SESSION['user']['email'] = $email;
+    $_SESSION['user']['id'] = $ligne['id'];
 
     $sql = <<<EOD
     UPDATE session
@@ -90,9 +98,10 @@ EOD;
 }
 // Cas ou la session est un Admin
 else{
-    $_SESSION['admin']['prenom'] = $ligne['prenom'];
-    $_SESSION['admin']['nom'] = $ligne['nom'];
-    $_SESSION['admin']['email'] = $email;
+    $_SESSION['user']['prenom'] = $ligne['prenom'];
+    $_SESSION['user']['nom'] = $ligne['nom'];
+    $_SESSION['user']['email'] = $email;
+    $_SESSION['user']['id'] = $ligne['id'];
 
     $sql = <<<EOD
     UPDATE session

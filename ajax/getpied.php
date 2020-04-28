@@ -1,7 +1,7 @@
-<footer class="page-footer font-small fixed-bottom bg-dark text-white px-0" style="z-index: 10; width: 100%">
+<footer class="page-footer font-small fixed-bottom bg-dark text-white px-0" style="z-index: 10; height: 40px">
     <div class="container-fluid">
         <div class="row justify-content-end">
-            <div class="col-8 text-center footer-copyright py-3 my-auto" style="height: 35px">© 2020 Copyright:
+            <div class="col-8 text-center footer-copyright py-3 my-auto copyright" style="height: 100%">© 2020 Copyright:
                 Lycée Saint Rémi, Amiens 80000
             </div>
             <div class="col-2 footer-copyright text-center py-3 bg-primary date">

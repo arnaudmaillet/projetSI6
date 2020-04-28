@@ -1,3 +1,4 @@
+// Initialisation des variables
 let inputNom;
 let inputPrenom;
 let inputReponse;
@@ -6,9 +7,11 @@ let inputConfirmPassword;
 
 
 $(function () {
+    // Chargement du menu et du pied
     $('#menu').load('ajax/getmenu.php');
     $('#pied').load('../ajax/getpied.php');
 
+    // Attibutions des variables
     inputNom = document.getElementById('nom');
     inputPrenom = document.getElementById('prenom');
     inputReponse = document.getElementById('reponse');
@@ -56,17 +59,14 @@ $(function () {
     $('#btnConfirmer').click(controlerPasswordModification);
 });
 
+// ----------------------------------------------------------------------------------
+// Gestion du formulaire d'oubli
+// ----------------------------------------------------------------------------------
 
-// vérification
+// vérification de la question seulement dans le cas ou l'utilisateur n'a pas rentré de nom ou prénom
 function controlerOubli() {
-    let nomOK = controler(inputNom);
-    let prenomOK = controler(inputPrenom);
     let reponseOK = controler(inputReponse);
-    if (nomOK == false)
-        Std.afficherMessage('msgOubli1', 'Champ requis !', 'rouge', 2);
-    else if (prenomOK == false)
-        Std.afficherMessage('msgOubli2', 'Champ requis !', 'rouge', 2);
-    else if (reponseOK == false)
+    if (reponseOK === false)
         Std.afficherMessage('msgOubli3', 'Champ requis !', 'rouge', 2);
     else
         oubli();
@@ -83,12 +83,12 @@ function oubli() {
         },
         dataType: "json",
         success: function (data) {
-            if (data == -2){
+            if (data === -2){
                 Std.afficherMessage('msgOubli1', 'Le nom renseigné est incorrect !', 'rouge', 2);
             }
-            else if(data == -1)
+            else if(data === -1)
                 Std.afficherMessage('msgOubli2', 'Le prenom renseigné est incorrect !', 'rouge', 2);
-            else if(data == 0)
+            else if(data === 0)
                 Std.afficherMessage('msgOubli3', 'La réponse à la question est incorrect !', 'rouge', 2);
             else
                 $('#modalPassword').modal('show');
@@ -103,9 +103,9 @@ function oubli() {
 function controlerPasswordModification() {
     let newPasswordOK = controler(inputNewPassword);
     let confirmPasswordOK = controler(inputConfirmPassword);
-    if (newPasswordOK == false)
+    if (newPasswordOK === false)
         Std.afficherMessage('msgPasswordModification1', 'Champ requis !', 'rouge', 2);
-    else if(confirmPasswordOK == false)
+    else if(confirmPasswordOK === false)
         Std.afficherMessage('msgPasswordModification2', 'Champ requis !', 'rouge', 2);
     else
         PasswordModifier();
@@ -124,11 +124,11 @@ function PasswordModifier() {
             $.dialog({title: '', content: request.responseText, type: 'red'});
         },
         success: function (data) {
-            if(data == -2)
+            if(data === -2)
                 Std.afficherMessage('msgPasswordModification', 'Le mot de passe doit contenir entre 8 et 15 caractères !', 'red', 3);
-            else if(data == -1)
+            else if(data === -1)
                 Std.afficherMessage('msgPasswordModification', 'Les mots de passe de correspondent pas !', 'red', 3);
-            else if(data == 0)
+            else if(data === 0)
                 Std.afficherMessage('msgPasswordModification', 'Votre nouveau mot de passe doit être différent de l\'ancien !', 'red', 3);
             else{
                 Std.afficherMessage('msgPasswordModificationOK', 'La modification a bien été prise en compte, Vous allez être redirigé vers la page d\'accueil. Pour vous connecter, Veuillez saisir le nouveau mot de passe !', 'vert', 6);
@@ -138,9 +138,6 @@ function PasswordModifier() {
     })
 }
 
-
-
-
 // Autres fonctions
 function controler(input) {
     input.value = input.value.trim();
@@ -148,7 +145,6 @@ function controler(input) {
     if (valeur.length === 0)
         return false;
 }
-
 
 function redirection() {
     document.location.href = "../ajax/deconnexion.php";

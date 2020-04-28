@@ -13,7 +13,7 @@ class Database
             $dbHost = 'localhost';
             $dbUser = 'root';
             $dbPassword = 'root';
-            $dbBase = 'Connexion';
+            $dbBase = 'gestionSession';
             $dbPort = '3306';
             try {
                 $chaine = "mysql:host=$dbHost;dbname=$dbBase;port=$dbPort";

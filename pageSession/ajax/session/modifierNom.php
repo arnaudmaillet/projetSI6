@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../../class/class.database.inc.php';
+require '../../../class/class.database.inc.php';
 $db = Database::getInstance();
 
 // récupération des données
