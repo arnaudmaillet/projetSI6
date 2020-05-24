@@ -1,18 +1,18 @@
 <?php
 include "../class/class.database.inc.php";
-session_start();
-
+if (session_status() === PHP_SESSION_NONE)
+    session_start();
 $db = Database::getInstance();
 
 // récupérer les données envoyées
 $email = $_POST['email'];
 $password = $_POST['password'];
-
+$passwordHash = hash('sha256', $password);
 
 
 // Requete de la session
 $sql = <<<EOD
-    Select * from session
+    Select id, email, password, nom, prenom, typeSession, nbEssai, etatSession, msgSessionBloque from session
     where email = :email;
 EOD;
 
@@ -23,13 +23,14 @@ $ligne = $curseur->fetch(PDO::FETCH_ASSOC);
 $curseur->closeCursor();
 
 // Comparaison des mdp -> si vrai, $passwordOK = 1 sinon = 0
-if ($password == $ligne['password'])
+if ($passwordHash == $ligne['password'])
     $passwordOK = 1;
 else
     $passwordOK = 0;
 
 // Cas ou la session n'existe pas
 if(!$ligne['email']){
+    $_SESSION['user']['email'] = $email;
     echo "-4";
 }
 // Cas ou le mdp est faux et que le nombre d'essai récupéré dans $ligne['nbEssai'] est > à 0
@@ -113,4 +114,12 @@ EOD;
     $curseur->execute();
     $curseur->closeCursor();
     echo "-1";
+}
+
+// Gestion du cookie
+if($_POST['memoriser'] == 1 ){
+    // Changement du délimiteur '-' avec '$$$' car certaines adresse mail possède un '-'
+    $valeur = $email . '~';
+    $valeur2 = sha1($ligne['id'] .$ligne['nom'] .$ligne['prenom'] .$_SERVER['REMOTE_ADDR']);
+    setcookie('user', $valeur . $valeur2, time() + 3600 * 24 * 3, '/');
 }

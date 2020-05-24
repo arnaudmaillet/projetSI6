@@ -7,7 +7,7 @@ $db = Database::getInstance();
 $email = $_POST['email'];
 
 $sql = <<<EOD
-    Select *
+    Select email, typeSession
     from session
     where email = :email;
 EOD;

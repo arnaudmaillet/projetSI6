@@ -2,9 +2,10 @@
 session_start();
 if (isset($_SESSION['user'])){
     $question = $_SESSION['user']['question'];
+    $email = $_SESSION['user']['email'];
 }
 else{
-    header("Location:../index.html");
+    header("Location:../index.php");
     exit;
 }
 ?>
@@ -41,7 +42,8 @@ else{
                 <i class="fas fa-arrow-circle-left fa-2x"></i>
             </a>
             <h1 class="pt-3">Mot de passe oublié ?</h1>
-            <p class="pt-3">Veuillez saisir les informations demandées :</p>
+            <p class="pt-3">Session : <?= $email ?></p>
+            <p>Veuillez saisir les informations demandées :</p>
             <div class="form-group">
                 <label for="nom">Nom</label>
                 <input class="form-control text-center" id="nom" type="text" name="Nom"

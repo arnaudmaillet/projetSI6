@@ -4,7 +4,7 @@
     </a>
     <div class="navbar-collapse justify-content-end" id="nav-content" style="color: white">
         <a href="../ajax/deconnexion.php">
-            <button type="button" class="btn btn-danger">Déconnexion</button>
+            <button type="button" class="btn btn-danger">Se déconnecter</button>
         </a>
     </div>
 </nav>

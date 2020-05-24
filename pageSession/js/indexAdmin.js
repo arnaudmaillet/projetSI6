@@ -1,9 +1,11 @@
+
 // Initialisation variables de session
 let session;
 let inputNomAdmin;
 let inputPrenomAdmin;
 
-$(function () {
+window.onload = initAdmin;
+function initAdmin() {
     // Chargement du menu et du pied
     $('#menu').load('ajax/getmenu.php');
     $('#pied').load('../ajax/getpied.php');
@@ -17,9 +19,6 @@ $(function () {
     inputPrenomAdmin= document.getElementById('inputPrenom');
     inputNomAdmin = document.getElementById('inputNom');
 
-
-    document.getElementById('btnAjouterTheme').onclick = ajouterTheme;
-
     // Attribution de la touche entrée
     inputNomAdmin.onkeypress = function (e) {
         if (e.key === "Enter") {
@@ -27,6 +26,7 @@ $(function () {
             $("#inputNom").blur();
             controlerNomPrenom();
         }
+        if (!/[A-Za-z]/.test(e.key)) return false
     };
 
     inputPrenomAdmin.onkeypress = function (e) {
@@ -35,6 +35,7 @@ $(function () {
             $("#inputPrenom").blur();
             controlerNomPrenom();
         }
+        if (!/[A-Za-z]/.test(e.key)) return false
     };
 
     // Mises à jour des informations
@@ -47,8 +48,10 @@ $(function () {
     $('#etatSession').click(modifierEtat);
 
     // Attribution du btn ModifierType
-    $('#confirmerNomPrenom').click(controlerNomPrenom);
-});
+    $('#confirmerNomPrenom').click(modifierNomPrenom);
+
+    document.getElementById('btnAjouterTheme').onclick = ajouterTheme;
+}
 
 // ----------------------------------------------------------------------------------
 // Gestion de la session Admin
@@ -101,14 +104,14 @@ function modifierEtat() {
     })
 }
 
-function controlerNomPrenom() {
-    let nomOK = controler(inputNomAdmin);
-    let prenomOK = controler(inputPrenomAdmin);
-    if (nomOK === false || prenomOK === false )
-        Std.afficherMessage('msgNomPrenomModification', 'Il faut rentrer un nom et un prénom !', 'rouge', 2);
-    else
-        modifierNomPrenom();
-}
+//function controlerNomPrenom() {
+//    let nomOK = controler(inputNomAdmin);
+//    let prenomOK = controler(inputPrenomAdmin);
+//    if (nomOK === false || prenomOK === false )
+//        Std.afficherMessage('msgNomPrenomModification', 'Il faut rentrer un nom et un prénom !', 'rouge', 2);
+//    else
+//        modifierNomPrenom();
+//}
 
 function modifierNomPrenom() {
     $.ajax({
@@ -129,6 +132,8 @@ function modifierNomPrenom() {
                 setTimeout(modalClose, 2000);
                 getLesDonnees();
             }
+            else
+                Std.afficherMessage('msgNomPrenomModification', 'Il faut rentrer au moins un nom ou un prénom !', 'rouge', 2);
         }
     })
 }
@@ -150,12 +155,7 @@ function getLesDonnees() {
 
 function afficherDonnees(data) {
     // Mise a jour de l'interface
-    $('#sessionEmail').empty();
-    $('#sessionNom').empty();
-    $('#sessionPrenom').empty();
-    $('#sessionType').empty();
-    $('#sessionEtat').empty();
-    $('#textArea').empty();
+    $('#sessionEmail, #sessionNom, #sessionPrenom, #sessionType, #sessionEtat, #textArea').empty();
     for (const session of data){
 
         // Affichage des données

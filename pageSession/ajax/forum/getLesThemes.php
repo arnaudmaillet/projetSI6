@@ -4,7 +4,7 @@ $db = Database::getInstance();
 
 $sql = <<<EOD
    Select id, nom from theme
-  order by nom;
+  order by id;
 EOD;
 $curseur = $db->query($sql);
 $lesLignes = $curseur->fetchAll(PDO::FETCH_ASSOC);

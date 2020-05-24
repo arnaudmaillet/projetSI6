@@ -50,6 +50,8 @@ button{
     width: 100%;
 }
 
+
+
 /* Parametres de la scrollbar de la balise div du profil */
 .profil{
     width: 100%;
@@ -123,7 +125,7 @@ button{
 
 /* Forum */
 #fenAjoutTheme{
-    padding-top: 300px;
+    padding-top: 200px;
 }
 
 #fenAjoutQuestion{

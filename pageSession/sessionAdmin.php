@@ -6,7 +6,7 @@ if (isset($_SESSION['user'])){
     $email = $_SESSION['user']['email'];
 }
 else{
-    header("Location:../index.html");
+    header("Location:../index.php");
     exit;
 }
 
@@ -50,7 +50,7 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
 
 </head>
 
-<body class="px-0">
+<body class="px-0" onload="init(); initAdmin(); initForum()">
 <div id="menu"></div>
 
 <div class="container d-flex h-100">
@@ -59,8 +59,13 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
             <div class="container border p-4">
                 <div class="row">
                     <div class="col-4 col-sm-12 col-md-4">
-                        <div class="text-center">
-                            <img src="<?php echo $grav_url; ?>" alt="image de profil" class="rounded-circle"/>
+                        <div class="text-center"
+                             data-toggle='tooltip'
+                             data-placement = "right"
+                             data-html="true"
+                             title='Configurez votre image de profil sur gravatar.com'
+                        >
+                            <img src="<?php echo $grav_url; ?>" class="rounded-circle"/>
                         </div>
                     </div>
                     <div class="col-8 col-sm-12 col-md-8">
@@ -105,7 +110,7 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
         </div>
         <div class="col-12 col-sm-6">
             <div class="card">
-                <div class="card-header bg-info">Paramètres de la session</div>
+                <div class="card-header bg-info">Paramétrage de la session</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6">
@@ -118,7 +123,7 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
                 </div>
             </div>
             <div class="card mt-4">
-                <div class="card-header bg-warning">Gestion des Sessions</div>
+                <div class="card-header bg-warning">Tableau de bord des sessions</div>
                 <div class="card-body">
                     <div class="form-row">
                         <div class="form-group col-6 col-sm-12 col-md-6">
@@ -174,22 +179,19 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
     </div>
 </div>
 
-<!-- Modal changer prenom -->
+<!-- Modal changer nomPrenom -->
 <div class="modal fade" id="modalNomPrenom" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalPrenom" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-body">
-                <label for="inputNom">Entrez un Nom :</label>
-                <input type="text" class="form-control text-center" id="inputNom" onchange="this.value = this.value.charAt(0).toUpperCase() + this.value.substr(1);">
-                <label for="inputPrenom" class="mt-3">Entrez un prénom :</label>
-                <input type="text" class="form-control text-center" id="inputPrenom" onchange="this.value = this.value.charAt(0).toUpperCase() + this.value.substr(1);">
+                <input type="text" class="form-control text-center" id="inputNom" onchange="this.value = this.value.charAt(0).toUpperCase() + this.value.substr(1);" placeholder="Entrez un nom">
+                <input type="text" class="form-control text-center mt-3" id="inputPrenom" onchange="this.value = this.value.charAt(0).toUpperCase() + this.value.substr(1);" placeholder="Entrez un prénom">
                 <div id="msgNomPrenomModification" class="text-danger text-center"></div>
                 <div id="msgNomPrenomModificationOK" class="text-success text-center"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
-                <button type="button" id="confirmerNomPrenom" class="btn btn-success">Valider
-                </button>
+                <button type="button" id="confirmerNomPrenom" class="btn btn-success">Valider</button>
             </div>
         </div>
     </div>
@@ -206,17 +208,17 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
                             <label for="newPassword">Nouveau mot de passe :</label>
                             <input type="text" class="form-control text-center" id="newPassword">
                             <small class="form-text text-muted">Le mot de passe doit contenir entre 8 et 15 caractères...</small>
-                            <div id="msgPasswordModification1" class="text-center text-danger w"></div>
+                            <div id="msgPasswordModification1" class="text-center text-danger w-100"></div>
                         </div>
                         <div class="row pt-3">
                             <label for="confirmPassword" class="pt-1">Saisissez à nouveau le mot de passe :</label>
                             <input type="password" class="form-control text-center" id="confirmPassword">
-                            <div id="msgPasswordModification2" class="text-center text-danger w"></div>
+                            <div id="msgPasswordModification2" class="text-center text-danger w-100"></div>
                         </div>
                         <div class="row pt-3">
                             <label for="inputPasswordModification">Pour confirmer, Saisissez l'ancien mot de passe :</label>
                             <input type="password" class="form-control text-center" id="inputPasswordModification">
-                            <div id="msgPasswordModification3" class="text-center text-danger w"></div>
+                            <div id="msgPasswordModification3" class="text-center text-danger w-100"></div>
                         </div>
                     </div>
                     <div id="msgPasswordModification" class="text-center text-danger"></div>
@@ -236,8 +238,7 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-body">
-                <label for="inputPasswordSuppression">Entrez votre mot de passe :</label>
-                <input type="password" class="form-control text-center" id="inputPasswordSuppression">
+                <input type="password" class="form-control text-center" id="inputPasswordSuppression" placeholder="Entrez votre mot de passe">
                 <div id="msgSuppression" class="text-danger text-center"></div>
                 <div id="msgSuppressionOK" class="text-success text-center"></div>
             </div>
@@ -269,12 +270,11 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
 <!-- Modal ajout question -->
 <div class="modal fade" id="fenAjoutQuestion" tabindex="-1" role="dialog" aria-labelledby="fenAjoutQuestion"
      aria-hidden="true" data-backdrop="true" data-keyboard="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="form-group text-left">
-                    <textarea id="question"></textarea>
-                </div>
+                <input id="question" type="text" class="form-control text-center"
+                       placeholder="Ecrivez votre question">
             </div>
             <div class="modal-footer">
                 <button class="btn btn-danger" data-dismiss="modal">Annuler</button>

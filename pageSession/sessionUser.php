@@ -5,7 +5,7 @@ if (isset($_SESSION['user'])) {
     $nom = $_SESSION['user']['nom'];
     $email = $_SESSION['user']['email'];
 } else {
-    header("Location:../index.html");
+    header("Location:../index.php");
     exit;
 }
 
@@ -57,7 +57,7 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
     </script>
 </head>
 
-<body class="px-0">
+<body class="px-0" onload="init(); initForum()">
 <div id="menu"></div>
 
 
@@ -67,8 +67,13 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
             <div class="container border p-4">
                 <div class="row">
                     <div class="col-4 col-sm-12">
-                        <div class="text-center">
-                            <img src="<?php echo $grav_url; ?>" alt="image de profil" class="rounded-circle"/>
+                        <div class="text-center w-25 m-auto"
+                             data-toggle='tooltip'
+                             data-placement = "right"
+                             data-html="true"
+                             title='Configurez votre image de profil sur gravatar.com'
+                        >
+                            <img src="<?php echo $grav_url; ?>" class="rounded-circle"/>
                         </div>
                     </div>
                     <div class="col-8 col-sm-12">
@@ -246,18 +251,18 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
                             <input type="text" class="form-control text-center" id="newPassword">
                             <small class="form-text text-muted">Le mot de passe doit contenir entre 8 et 15
                                 caractères...</small>
-                            <div id="msgPasswordModification1" class="text-center text-danger w"></div>
+                            <div id="msgPasswordModification1" class="text-center text-danger w-100"></div>
                         </div>
                         <div class="row pt-3">
                             <label for="confirmPassword" class="pt-1">Saisissez à nouveau le mot de passe :</label>
                             <input type="password" class="form-control text-center" id="confirmPassword">
-                            <div id="msgPasswordModification2" class="text-center text-danger w"></div>
+                            <div id="msgPasswordModification2" class="text-center text-danger w-100"></div>
                         </div>
                         <div class="row pt-3">
                             <label for="inputPasswordModification">Pour confirmer, Saisissez l'ancien mot de passe
                                 :</label>
                             <input type="password" class="form-control text-center" id="inputPasswordModification">
-                            <div id="msgPasswordModification3" class="text-center text-danger w"></div>
+                            <div id="msgPasswordModification3" class="text-center text-danger w-100"></div>
                         </div>
                     </div>
                     <div id="msgPasswordModification" class="text-center text-danger"></div>
@@ -295,11 +300,11 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email )
 <!-- Modal ajout question -->
 <div class="modal fade" id="fenAjoutQuestion" tabindex="-1" role="dialog" aria-labelledby="fenAjoutQuestion"
      aria-hidden="true" data-backdrop="true" data-keyboard="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-group text-left">
-                    <textarea id="question"></textarea>
+                    <input id="question" type="text" class="form-control text-center" placeholder="Entrez votre question ici">
                 </div>
             </div>
             <div class="modal-footer">

@@ -27,6 +27,7 @@ $(function () {
         if (e.key === "Enter") {
             controlerConnexion();
         }
+        if (!/[A-Za-z0-9@_.-]/.test(e.key)) return false
     };
 
     // si on appuie sur la touche Enter dans le champ password on lance la fonction controlerConnexion
@@ -45,7 +46,7 @@ $(function () {
 
 
     // le clic sur le bouton btnValider doir lancer la fonction controlerConnexion
-    $('#btnValider').click(controlerConnexion);
+    $('#btnConnexion').click(controlerConnexion);
     // le clic sur le bouton btnFormPasswordOubli doir lancer la fonction controlerPasswordOubli
     $('#btnFormPasswordOubli').click(controlerPasswordOubli);
     // le clic sur le bouton btnMsgSessionBloque doir lancer la fonction ajouterMsgSessionBloque
@@ -96,11 +97,12 @@ function connecter() {
         data: {
             email: email.value,
             password: password.value,
+            memoriser : memoriser.checked ? 1 : 0,
         },
         dataType: "json",
         success: function (data) {
             if (data === -4)
-                messageConnexion.innerHTML = "Compte inexistant ! Veuillez créer votre compte en cliquant <a href='pageCreation/creationSession.html'>ici </a>";
+                messageConnexion.innerHTML = "Compte inexistant ! Veuillez créer votre compte en cliquant <a href='pageCreation/creationSession.php'>ici </a>";
             else if (data === 3)
                 messageConnexion.innerText = "Mot de passe non valide ! il vous reste 3 essais";
             else if (data === 2)
@@ -110,7 +112,7 @@ function connecter() {
             else if (data === -3)
                 messageConnexion.innerText = "Le compte est suspendu et vous avez déjà envoyé un message à l'administrateur. Vous allez bientôt recevoir une réponse dans votre boite mail !";
             else if (data === -2)
-                messageConnexion.innerHTML = "Le compte a été suspendu, Vous pouvez contacter l'administrateur <a href='#' data-toggle=\"modal\" data-target=\"#modalMsgSessionBloque\">ici</a> !";
+                messageConnexion.innerHTML = "Le compte a été suspendu, Vous pouvez contacter l'administrateur en cliquant <a href='#' data-toggle=\"modal\" data-target=\"#modalMsgSessionBloque\">ici</a> !";
             else if (data === -1)
                 document.location.href = "pageSession/sessionAdmin.php";
             else
@@ -135,7 +137,7 @@ function controlerPasswordOubli() {
 // Sinon l'hôte est redirigé vers la page passwordOubli
 function passwordOubli() {
     $.ajax({
-        url: "ajax/passwordOubli.php",
+        url: "ajax/getQuestionSecrete.php",
         type: 'post',
         data: {
             email: emailPasswordOubli.value,
@@ -166,7 +168,7 @@ function ajouterMsgSessionBloque() {
             success: function (data) {
                 if (data === 1)
                     Std.afficherMessage('confirmationSessionBloque', 'Le message à bien été envoyé, vous allez bientôt recevoir une réponse sur votre boite mail !', 'vert', 4);
-                setTimeout(redirection, 4000);
+                    setTimeout(redirection, 4000);
             },
             error: function (request) {
                 $.dialog({title: '', content: request.responseText, type: 'red'});

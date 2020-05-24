@@ -33,7 +33,7 @@ EOD;
 else{
     $sql = <<<EOD
     update session
-        set etatSession = "E", nbEssai = 3
+        set etatSession = "E", nbEssai = 3, msgSessionBloque = ""
     where email = :email;
 EOD;
     $curseur = $db->prepare($sql);

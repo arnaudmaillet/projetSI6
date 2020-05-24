@@ -35,13 +35,17 @@ body {
 }
 
 .creator{
-    padding-top: 60px;
+    padding-top: 90px;
 }
 
 button{
     width: 100%;
 }
 
+#memoriser{
+    position: relative;
+    top: 3px;
+}
 /* Effet opacité lié a animation du container */
 @keyframes opacity{
     from{opacity:0%;}

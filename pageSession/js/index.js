@@ -1,3 +1,4 @@
+
 // Initialisation variables de session
 let inputNom;
 let inputPrenom;
@@ -6,8 +7,10 @@ let inputPasswordSuppression;
 let inputNewPassword;
 let inputConfirmPassword;
 
+window.onload = init;
+function init() {
+    $('[data-toggle = "tooltip"]').tooltip();
 
-$(function () {
     // Chargement du menu et du pied
     $('#menu').load('ajax/getmenu.php');
     $('#pied').load('../ajax/getpied.php');
@@ -28,6 +31,7 @@ $(function () {
             $("#inputNom").blur();
             controlerNomModification();
         }
+        if (!/[A-Za-zÉÈÀËÊÏéçèàëêï' ]/.test(e.key)) return false
     };
 
     inputPrenom.onkeypress = function (e) {
@@ -35,6 +39,7 @@ $(function () {
             $("#inputPrenom").blur();
             controlerPrenomModification();
         }
+        if (!/[A-Za-zÉÈÀËÊÏéçèàëêï' ]/.test(e.key)) return false
     };
 
     inputPasswordModification.onkeypress = function (e) {
@@ -66,7 +71,7 @@ $(function () {
     $('#confirmerNom').click(controlerNomModification);
     $('#confirmerPrenom').click(controlerPrenomModification);
 
-});
+}
 
 
 // ----------------------------------------------------------------------------------
@@ -95,7 +100,7 @@ function PrenomModifier() {
         },
         success: function (data) {
             if (data === 0) {
-                Std.afficherMessage('msgPrenomModificationOK', 'Ce nom est déjà votre Prenom actuel !', 'vert', 2);
+                Std.afficherMessage('msgPrenomModificationOK', 'Ce prénom est déjà votre prénom actuel !', 'vert', 2);
             } else {
                 Std.afficherMessage('msgPrenomModificationOK', 'Modification appliquée !', 'vert', 2);
                 setTimeout(reload, 2000);
@@ -173,7 +178,7 @@ function PasswordModifier() {
             else if (data === -1)
                 Std.afficherMessage('msgPasswordModification', 'Votre nouveau mot de passe doit être différent de l\'ancien !', 'red', 3);
             else if (data === 0)
-                Std.afficherMessage('msgPasswordModification', 'Mot de passe incorrect !', 'red', 3);
+                Std.afficherMessage('msgPasswordModification', 'Le mot de passe actuel est incorrect !', 'red', 3);
             else {
                 Std.afficherMessage('msgPasswordModificationOK', 'Votre mot de passe a bien été changé, Il faudra rentrer le nouveau mot de passe lors de la prochaine connexion !', 'vert', 5);
                 setTimeout(reload, 5000);
@@ -216,7 +221,7 @@ function controlerSuppressionPassword() {
 
 function confirmerSuppression() {
     let n = new Noty({
-        text: 'Êtes vous sur de vouloir supprimer votre compte? Après cette action, Vous ne pourrez plus revenir en arrière !',
+        text: 'Êtes vous sûr de vouloir supprimer votre compte? Après cette action vous perdrez votre espace personalisé et vous ne pourrez plus revenir en arrière !',
         layout: 'center',
         theme: 'sunset',
         modal: true,
@@ -226,11 +231,11 @@ function confirmerSuppression() {
             close: 'animated lightSpeedOut'
         },
         buttons: [
-            Noty.button('Supprimer définitivement ce compte', 'btn btn-sm btn-success marge', function () {
+            Noty.button('Oui, je souhaite supprimer définitivement ce compte', 'btn btn-sm btn-success marge', function () {
                 supprimer();
                 n.close();
             }),
-            Noty.button('Revenir en arrière', 'btn btn-sm btn-danger mt-3', function () {
+            Noty.button('Non, je souhaite revenir en arrière', 'btn btn-sm btn-danger mt-3', function () {
                 // On ferme le modal et on met a jour la valeur de l'input à ""
                 document.getElementById('inputPasswordSuppression').value = "";
                 $('#modalSuppression').modal('hide');
@@ -252,7 +257,7 @@ function supprimer() {
         success: function (data) {
             if (data === 0) {
                 Std.afficherMessage('msgSuppressionOK', 'Suppression effectué, Veuillez patienter vous allez être redirigé vers la page d\'accueil !', 'vert', 5);
-                setTimeout(redirection, 5000);
+                setTimeout(redirection, 4000);
             } else
                 $.dialog({title: '', content: request.responseText, type: 'red'});
         }

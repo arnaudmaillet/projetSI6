@@ -9,6 +9,10 @@ $confirmation = $_POST["confirmation"];
 $question = $_POST["question"];
 $reponse = $_POST["reponse"];
 
+$passwordHash = hash('sha256', $password);
+$reponseHash = hash('sha256', $reponse);
+
+
 //contôle de l'email
 $emailOK = preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email);
 
@@ -45,9 +49,9 @@ else{
 EOD;
     $curseur = $db->prepare($sql);
     $curseur->bindParam('email', $email);
-    $curseur->bindParam('password', $password);
+    $curseur->bindParam('password', $passwordHash);
     $curseur->bindParam('question', $question);
-    $curseur->bindParam('reponse', $reponse);
+    $curseur->bindParam('reponse', $reponseHash);
     $curseur->execute();
     $curseur->closeCursor();
     echo "1" ;

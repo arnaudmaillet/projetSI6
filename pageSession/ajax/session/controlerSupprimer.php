@@ -4,7 +4,7 @@ require '../../../class/class.database.inc.php';
 $db = Database::getInstance();
 
 $email = $_SESSION['user']['email'];
-$password = $_POST['password'];
+$password = hash('sha256', $_POST['password']);
 
 //vérification du mdp
 $sql = <<<EOD

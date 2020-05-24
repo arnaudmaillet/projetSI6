@@ -9,6 +9,7 @@ $nom = $_POST['nom'];
 $prenom = $_POST['prenom'];
 $reponse = $_POST['reponse'];
 $email = $_SESSION['user']['email'];
+$reponseHash = hash('sha256', $reponse);
 
 // Requete des informations a comparer
 $sql = <<<EOD
@@ -27,7 +28,7 @@ if ($ligne['nom'] !== $nom)
     echo "-2";
 elseif ($ligne['prenom'] !== $prenom)
     echo "-1";
-elseif ($ligne['reponse'] !== $reponse)
+elseif ($ligne['reponse'] !== $reponseHash)
     echo "0";
 else
     echo "1";

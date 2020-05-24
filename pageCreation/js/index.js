@@ -6,6 +6,7 @@ let question;
 let inputReponse;
 
 
+
 $(function () {
     // Chargement du menu et du pied
     $('#menu').load('ajax/getmenu.php');
@@ -24,6 +25,7 @@ $(function () {
         if(e.key === "Enter") {
             controlerAjout();
         }
+        if (!/[A-Za-z0-9@_.-]/.test(e.key)) return false
     };
 
     inputPassword.onkeypress = function(e) {
@@ -70,7 +72,7 @@ function controlerAjout() {
 }
 
 function ajouter() {
-
+    let msgPassword = document.getElementById('msgAjout2');
 
     $.ajax({
         url: 'ajax/ajouter.php',
@@ -88,14 +90,19 @@ function ajouter() {
         },
         success: function (data) {
             if (data === -3){
-                Std.afficherMessage('msg', 'Adresse mail non valide !', 'rouge', 3);
+                Std.afficherMessage('msgAjout1', 'Adresse email non valide !', 'rouge', 3);
             }
             else if(data === -2)
-                Std.afficherMessage('msg', 'Un compte utilisant cette adresse existe déjà !', 'rouge', 3);
-            else if (data === -1)
-                Std.afficherMessage('msg', 'Le mot de passe doit contenir entre 8 et 15 caractères !', 'rouge', 3);
+                Std.afficherMessage('msgAjout1', 'Un compte utilisant cette adresse existe déjà !', 'rouge', 3);
+            else if (data === -1){
+                // On retire la classe text-muted et on ajoute les classes text-danger, text-uppercase et font-weight-bold à l'élément
+                msgPassword.classList.remove("text-muted");
+                msgPassword.classList.add("text-danger");
+                msgPassword.classList.add("text-uppercase");
+                msgPassword.classList.add("font-weight-bold");
+            }
             else if (data === 0)
-                Std.afficherMessage('msg', 'Les mots de passe ne correspondent pas !', 'rouge', 3);
+                Std.afficherMessage('msgAjout3', 'Les mots de passe ne correspondent pas !', 'rouge', 3);
             else{
                 // mise à jour de l'interface
                 msgAjout();

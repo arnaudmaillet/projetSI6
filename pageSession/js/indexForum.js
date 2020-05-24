@@ -1,3 +1,4 @@
+
 // Initialisation variables du forum
 let idTheme;
 let idQuestion;
@@ -5,9 +6,9 @@ let inputTheme;
 let question;
 let reponse;
 let editor;
-let editor2;
 
-$(function () {
+window.onload = initForum;
+function initForum() {
     // Chargement des themes
     $.getJSON("ajax/forum/getlesthemes.php", remplirLesThemes);
 
@@ -20,7 +21,6 @@ $(function () {
     idTheme.onchange = getLesQuestions;
     document.getElementById('btnAjouterQuestion').onclick = ajouterQuestion;
     document.getElementById('btnAjouterReponse').onclick = ajouterReponse;
-
 
 
 
@@ -40,13 +40,11 @@ $(function () {
             contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
         },
     };
-    ClassicEditor.create(question, parametre).then(newEditor => {
+
+    ClassicEditor.create(reponse, parametre).then(newEditor => {
         editor = newEditor;
     });
-    ClassicEditor.create(reponse, parametre).then(newEditor => {
-        editor2 = newEditor;
-    });
-});
+}
 
 // ----------------------------------------------------------------------------------
 // Gestion du forum
@@ -63,15 +61,20 @@ function remplirLesThemes(data) {
 
 function ajouterTheme() {
     if (inputTheme.value.length > 0) {
+        // on vide l'affichage des themes de 'idTheme'
+        $('#idTheme').empty();
+        // exécution la requete d'ajout
         $.post("ajax/forum/ajouterTheme.php",
             {
                 nom: inputTheme.value,
-            }, 'json'
-        ).fail(erreurAjax);
-        $('#idTheme').empty();
-        $.getJSON("ajax/forum/getlesthemes.php", remplirLesThemes);
-        $('#fenAjoutTheme').modal("hide");
+            }, fermerThemes, 'json').fail(erreurAjax);
    }
+}
+
+function fermerThemes() {
+    // Mise à jour de l'affichage
+    $.getJSON("ajax/forum/getlesthemes.php", remplirLesThemes);
+    $('#fenAjoutTheme').modal("hide");
 }
 
 function getLesQuestions() {
@@ -80,7 +83,6 @@ function getLesQuestions() {
 
 // appeler le script ajax/forum/ajouterquestion.php si le champ est renseigné
 function ajouterQuestion() {
-    question.value = editor.getData();
     if (question.value.length > 0) {
         $.post("ajax/forum/ajouterQuestion.php",
             {
@@ -92,7 +94,6 @@ function ajouterQuestion() {
 
 //effacer le champ de saisie, fermer la fenêtre modale et appeler la fonction getLesQuestions.
 function fermerQuestion() {
-    editor.setData("");
     $('#fenAjoutQuestion').modal("hide");
     getLesQuestions();
 }
@@ -127,7 +128,7 @@ function afficherQuestion(data) {
 
 // Gestion des réponse
 function ajouterReponse() {
-    reponse.value = editor2.getData();
+    reponse.value = editor.getData();
     if (reponse.value.length > 0) {
         $.post("ajax/forum/ajouterreponse.php",
             {
@@ -138,7 +139,7 @@ function ajouterReponse() {
 }
 
 function fermerReponse() {
-    editor2.setData("");
+    editor.setData("");
     $('#fenReponse').modal('hide');
     getLesQuestions();
 }
